@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/elkeis/tmp-1/issues"
   },
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "homepage": "https://github.com/elkeis/tmp-1#readme"
 }
