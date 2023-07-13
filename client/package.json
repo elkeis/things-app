@@ -27,8 +27,10 @@
     "@capacitor/keyboard": "5.0.5",
     "@capacitor/status-bar": "5.0.5",
     "@ionic/angular": "^7.0.0",
+    "@trpc/client": "^10.34.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
+    "server": "^1.0.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },

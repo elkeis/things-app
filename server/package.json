@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "dev": "onchange -i -k 'src/**/*.ts' -- ts-node src/main",
     "start": "ts-node src/main",
+    "build:types": "tsc src/types.ts  --declaration --emitDeclarationOnly --outFile index.d.ts",
     "test": "vitest"
   },
   "author": "",

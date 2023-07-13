@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { service } from "./service"
 import {z} from 'zod';
 
@@ -49,6 +50,10 @@ export const getAccessToken = service((ctx) =>
       )
     } catch (ex) {
       ctx.log(ex, 'error');
+      throw new TRPCError({
+        message: 'github service error',
+        code: 'INTERNAL_SERVER_ERROR',
+      })
     }
   }
 )

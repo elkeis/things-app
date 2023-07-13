@@ -1,4 +1,4 @@
-import https from 'https';
+import {request as httpsRequest} from 'https';
 import { service } from './service';
 import {z} from 'zod';
 
@@ -13,7 +13,7 @@ export const request = service(ctx =>
     try {
       return await new Promise<any>((resolve, reject) => {
   
-        const request = https.request({
+        const request = httpsRequest({
           ...new URL(url),
           method: options.method,
           headers: options.headers

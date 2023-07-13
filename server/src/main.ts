@@ -17,18 +17,19 @@ import fs from 'fs-extra';
     router: root,
     createContext,
     onError: ({ctx, req, path, type, error}) => {
-      ctx?.log(null, `${path}/${type}/${error.code}`, 'error');
+      ctx?.log(null, `${type}/${path} – ${error.code}`, 'error');
     }
   })
   
   const server = createServer(async (request, response) => {
     if (request.url?.startsWith('/trpc')) {
       log(`request: ${request.method} : ${request.url}`);
+      request.url = request.url.replace('/trpc', '');
       trpcHandler(request, response);
-    } else if (args.serve) {
+    } else if (args['serve']) {
       log('serve static ' + request.url);
       serveStatic(request, response, {
-        public:  <any>args.serve,
+        public:  <any>args['serve'],
         directoryListing: false,
         symlinks: true,
         rewrites: [{
