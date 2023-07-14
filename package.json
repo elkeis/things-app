@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "nx run client:build",
-    "start": "nx run server:start -- --serve=`pwd`/srv",
+    "build": "nx run @local/client:build",
+    "start": "nx run @local/server:start -- --serve=`pwd`/srv",
     "dev": "nx run-many --target=dev --all"
   },
   "repository": {
@@ -19,8 +19,7 @@
     "url": "https://github.com/elkeis/tmp-1/issues"
   },
   "workspaces": [
-    "client",
-    "server"
+    "packages/*"
   ],
   "homepage": "https://github.com/elkeis/tmp-1#readme",
   "devDependencies": {

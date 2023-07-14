@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
-import type { AppRouter } from 'server/src/routes/trpc/root';
+import type { AppRouter } from '@local/server/src/routes/trpc/root'
 
 
 @Injectable({
