@@ -12,9 +12,9 @@ export const request = service(ctx =>
     ctx.log(['server-request:', url, options]);
     try {
       return await new Promise<any>((resolve, reject) => {
-  
-        const request = httpsRequest({
-          ...new URL(url),
+        url = new URL(url);
+
+        const request = httpsRequest(url, {
           method: options.method,
           headers: options.headers
         }, res => {
@@ -24,11 +24,13 @@ export const request = service(ctx =>
           res.on('data', chunk => data += chunk);
           res.on('end', () => {
             try {
-              const parsed = options.schema.parse(JSON.stringify(data));
+              ctx.log(data);
+              const parsed = options.schema.parse(JSON.parse(data));
               resolve(parsed);
             } catch (ex) {
               reject(ex);
             }
+            res.destroy();
           })
           res.on('error', (err) => {
             reject(err);

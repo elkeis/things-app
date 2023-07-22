@@ -7,15 +7,25 @@ import type { AppRouter } from '@local/server/src/routes/trpc/root'
   providedIn: 'root'
 })
 export class TrpcService {
+  private access_token = ''
+
   public readonly client = createTRPCProxyClient<AppRouter>({
     links: [
       httpBatchLink({
         url: '/trpc',
         headers: async () => {
-          return {}
+          return this.access_token ? {
+            Authorization: `Bearer ${this.access_token}`
+          } : {};
         }
       }),
     ]
   });
+
+
+  setAuth(access_token: string) {
+    this.access_token = access_token;
+  }
+
   constructor() { }
 }

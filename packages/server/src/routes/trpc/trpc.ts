@@ -12,7 +12,7 @@ export const {
 
 const auth = middleware((opts) => {
   const { ctx } = opts;
-  if (ctx.session) {
+  if (ctx.sessionData) {
     return opts.next({
       ctx,
     });

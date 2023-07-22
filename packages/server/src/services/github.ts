@@ -2,6 +2,10 @@ import { TRPCError } from "@trpc/server";
 import { service } from "./service"
 import {z} from 'zod';
 
+const mandatoryHeaders = Object.freeze({
+  ['User-Agent']: `elkeis-${process.env['app_name']}`
+})
+
 export const accessTokenSchema = z.object({
   access_token: z.string(),
   expires_in: z.number(),
@@ -32,17 +36,25 @@ export const getAuthUrl = service(() =>
 export const getUser = service(ctx => 
   async (access_token: string) => {
     try {
-      return await ctx.network.request<GithubUser>(
+      const {
+        login,
+        name,
+        avatar_url,
+      } = await ctx.network.request<GithubUser>(
         'https://api.github.com/user',
         {
           method: 'GET',
           headers: {
+            ...mandatoryHeaders,
             Authorization: `Bearer ${access_token}`,
             Accept: 'application/json',
           },
           schema: githubUserSchema,
         }
       )
+      return {
+        login, name, avatar_url,
+      }
     } catch (ex) {
       ctx.log(ex, 'error');
       throw new TRPCError({
@@ -74,7 +86,9 @@ export const getAccessToken = service((ctx) =>
             client_secret,
           },
           headers: {
-            'Content-Type': 'application/json'
+            ...mandatoryHeaders,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
           schema: accessTokenSchema,
         }
