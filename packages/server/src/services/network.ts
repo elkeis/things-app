@@ -6,7 +6,7 @@ export const request = service(ctx =>
   async (url: string | URL, options: {
     headers: Record<string,string>,
     method: 'GET' | 'POST',
-    json: any,
+    json?: any,
     schema: z.Schema
   }) => {
     ctx.log(['server-request:', url, options]);
@@ -34,8 +34,9 @@ export const request = service(ctx =>
             reject(err);
           })
         });
-  
-        request.write(JSON.stringify(options.json));
+        if (options.json) {
+          request.write(JSON.stringify(options.json));
+        }
         request.end(); 
       });
     } catch (ex) {

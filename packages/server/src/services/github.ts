@@ -9,8 +9,14 @@ export const accessTokenSchema = z.object({
   refresh_token_expires_in: z.number(),
   token_type: z.string().regex(/bearer/g),
 });
-
 export type AccessToken = z.infer<typeof accessTokenSchema>;
+
+export const githubUserSchema = z.object({
+  login: z.string(),
+  name: z.string(),
+  avatar_url: z.string(),
+})
+export type GithubUser = z.infer<typeof githubUserSchema>;
 
 const {
   client_id,
@@ -21,6 +27,31 @@ export const getAuthUrl = service(() =>
   async () => {
     return `https://github.com/login/oauth/authorize?client_id=${client_id}`
   }
+)
+
+export const getUser = service(ctx => 
+  async (access_token: string) => {
+    try {
+      return await ctx.network.request<GithubUser>(
+        'https://api.github.com/user',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            Accept: 'application/json',
+          },
+          schema: githubUserSchema,
+        }
+      )
+    } catch (ex) {
+      ctx.log(ex, 'error');
+      throw new TRPCError({
+        message: 'github user-service error',
+        code: 'INTERNAL_SERVER_ERROR',
+        cause: ex,
+      })
+    }
+  }  
 )
 
 export const getAccessToken = service((ctx) => 
