@@ -1,0 +1,22 @@
+<div class="user-profile">
+  <div class="loading-indicator" *ngIf="showInProgress; else elseBlock">
+    <span>logging in</span>
+    <ion-spinner name="dots"></ion-spinner>
+  </div>
+  <ng-template #elseBlock>
+    <ng-template [ngIf]="user" [ngIfElse]="noUser">
+      <ion-chip>
+        <ion-avatar>
+          <img [alt]="user.name" [src]="user.avatar_url" />
+        </ion-avatar>
+        <ion-label>{{user.name}}</ion-label>
+      </ion-chip>
+    </ng-template>
+    <ng-template #noUser>
+      <ion-button (click)="loginWithGithub()" fill="clear">
+        <ion-icon name="logo-github" slot="start"></ion-icon>
+        <div>login</div>
+      </ion-button>
+    </ng-template>
+  </ng-template>
+</div>

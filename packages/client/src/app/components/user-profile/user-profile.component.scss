@@ -1,0 +1,13 @@
+.user-profile {
+
+  padding: 1em;
+
+  .loading-indicator {
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+
+    text-transform: uppercase;
+  }
+}

@@ -1,0 +1,5 @@
+<app-user-profile
+  [user]="user$ | async"
+  [showInProgress]="showSpinner"
+  (login)="loginWithGithub()"
+></app-user-profile>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TrpcService } from '../trpc.service';
+import { TrpcService } from '../../trpc.service';
 import { Router } from '@angular/router';
 import { decodeJwt } from 'jose';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-authorize',
@@ -11,25 +12,33 @@ import { decodeJwt } from 'jose';
 export class AuthorizePage implements OnInit {
 
   public code = '';
-  public userData = {};
 
 
   constructor(
     private trpc: TrpcService,
+    private session: SessionService,
     private router: Router,
   ) { }
 
   async ngOnInit() {
+    if (this.session.getAuth()) {
+      this.router.navigate(['/'])
+      return;
+    }
+
     const urlTree = this.router.parseUrl(this.router.url);
     this.code = urlTree.queryParams['code'];
+    if (!this.code) {
+      this.router.navigate(['/'])
+      return;
+    }
     const {access_token} = await this.trpc.client.session.login.query({
       githubCode: this.code,
       redirect_url: document.location.href.split('?')[0]
     });
 
-    this.trpc.setAuth(access_token);
-    this.userData = await decodeJwt(access_token);
-    alert(await this.trpc.client.example.hello.query());
+    this.session.setAuth(access_token);
+    this.router.navigate(['/'])
   }
 
 }

@@ -6,7 +6,7 @@
   "typings": "index.d.ts",
   "scripts": {
     "dev": "onchange -i -k 'src/**/*.ts' -- ts-node src/main",
-    "start": "ts-node src/main",
+    "start": "ts-node src/main --ssl",
     "build:types": "tsc src/types.ts  --declaration --emitDeclarationOnly --outFile index.d.ts",
     "test": "vitest"
   },

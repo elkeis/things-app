@@ -1,15 +1,18 @@
+import { SafeUrl } from '@angular/platform-browser';
 import { createReducer, on, createAction, props } from '@ngrx/store';
 
 export const initialState: {
-  name?: string,
-  avatarUrl?: string,
+  user?: {
+    name: string,
+    avatar_url: string,
+  }
 } = {}
 
 export const actions = {
   login: createAction('[Session] login', props<typeof initialState>())
 }
 
-export const counterReducer = createReducer(
+export const sessionReducer = createReducer(
   initialState,
   on(actions.login, (state, {type, ...props}) => ({...state, ...props})),
 );
