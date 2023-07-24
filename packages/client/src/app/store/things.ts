@@ -3,14 +3,18 @@ import { createReducer, on, createAction, props } from '@ngrx/store';
 import * as _ from 'lodash';
 
 export const initialState: {
-  showCreateThingForm: boolean
+  showCreateThingForm: boolean,
+  updating: boolean,
   list: BaseThing[]
 } = {
+  updating: false,
   list: [],
   showCreateThingForm: false,
 }
 
 export const actions = {
+  setUpdating: createAction(`[Things] set updating`, props<{updating: boolean}>()),
+  deleteThing: createAction(`[Things] delete item`, props<{id: string}>()),
   updateList: createAction(`[Things] update list`),
   fetchRootThings: createAction('[Things] fetch all root', props<{list: typeof initialState['list']}>()),
   showCreateThingForm: createAction('[Things] show create thing form'),
@@ -19,6 +23,7 @@ export const actions = {
 
 export const thingsReducer = createReducer(
   initialState,
+  on(actions.setUpdating, (state, {type, ...props}) => ({...state, ...props})),
   on(actions.updateList, state => state),
   on(actions.fetchRootThings, (state, {type, ...props}) => {
     const old = state.list.map(item => item.id);
