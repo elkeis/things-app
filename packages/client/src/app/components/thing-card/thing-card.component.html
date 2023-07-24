@@ -1,5 +1,5 @@
 <div class="thing-card">
-  <ion-chip slot="start" class="thing-name">
+  <ion-chip slot="start" class="thing-name" (click)="openThing()">
     {{thing?.emoji}} <span class="name-container"> {{thing?.name}}</span>
   </ion-chip>
   <ion-label>

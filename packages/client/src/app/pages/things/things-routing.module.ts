@@ -9,6 +9,11 @@ const routes: Routes = [
     path: '',
     component: ThingsPage,
     canActivate: [AuthenticatedGuard]
+  },
+  {
+    path: 'open/:thingId',
+    component: ThingsPage,
+    canActivate: [AuthenticatedGuard]
   }
 ];
 

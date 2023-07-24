@@ -99,3 +99,21 @@ export const registerLogin = service(ctx =>
     }
   }
 )
+
+export const findThingsById = service(ctx => 
+  async (id: string) => {
+    try {
+      return await db.physicalObject.findUnique({
+        where: {
+          id
+        },
+        include: {
+          contents: true,
+        }
+      });
+    } catch (ex) {
+      ctx.log(ex, `can't fetch Thing:${id}`, 'error');
+      return null;
+    }
+  }
+)

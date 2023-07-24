@@ -15,7 +15,7 @@ export const thingSchemaBase = z.object({
 export type BaseThing = z.infer<typeof thingSchemaBase>
 
 export type Thing = BaseThing & {
-  contents: Thing[],
+  contents: BaseThing[],
 }
 
 export const thingSchema: z.ZodType<Thing> = thingSchemaBase.extend({

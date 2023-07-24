@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BaseThing } from '@local/schemas/src';
 
 @Component({
@@ -8,9 +8,15 @@ import { BaseThing } from '@local/schemas/src';
 })
 export class ThingCardComponent {
   @Input() thing?: BaseThing;
-
+  @Output() open = new EventEmitter<string>()
   constructor() { }
 
   ngOnInit() {}
+
+  openThing() {
+    if (this.thing?.id && this.thing.type === 'CONTAINER') {
+      this.open.emit(this.thing?.id)
+    }
+  }
 
 }

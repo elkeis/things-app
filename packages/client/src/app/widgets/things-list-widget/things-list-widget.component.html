@@ -2,15 +2,18 @@
   <ion-list *ngIf="(thingsState$ | async); let state">
     <ion-list-header>
       <div class="list-header">
-        <h5>on the floor</h5>
+        <h5 *ngIf="state.openedThing; else onTheFloor">inside {{state.openedThing.name}}</h5>
+        <ng-template #onTheFloor>
+          <h5>on the floor</h5>
+        </ng-template>
         <span>
           <ion-spinner *ngIf="state.updating" name="dots"></ion-spinner>
         </span>
       </div>
     </ion-list-header>
     <div class="content">
-      <ion-item *ngFor="let thing of state.list">
-        <app-thing-card [thing]="thing"></app-thing-card>
+      <ion-item *ngFor="let thing of thingsList$ | async">
+        <app-thing-card [thing]="thing" (open)="openThing($event)"></app-thing-card>
         <ion-buttons slot="end">
           <ion-button fill="clear" [disabled]="state.updating" (click)="deleteThing(thing.id)">
             delete

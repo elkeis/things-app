@@ -44,6 +44,13 @@ export const things = router({
     .output(z.void())
     .query(async ({ctx, input}) => {
       await ctx.database.deleteThing(input);
+    }),
+  
+  getItemById: protectedProcedure
+    .input(z.string().uuid())
+    .output(thingSchema.or(z.null()))
+    .query(async ({ctx, input}) => {
+      return await ctx.database.findThingsById(input)
     })
 });
 
