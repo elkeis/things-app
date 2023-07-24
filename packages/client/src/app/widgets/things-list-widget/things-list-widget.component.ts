@@ -95,11 +95,14 @@ export class ThingsListWidgetComponent  implements OnInit, OnDestroy {
             .parse(a.openedThing?.id)
         ])
       }),
-      this.router.events.subscribe((event) => {
-        if (event.type === EventType.NavigationEnd) {
-          this.loadFromRoute()
+      this.route.paramMap.subscribe((params) => {
+        const thingId = z.string().uuid().catch('').parse(params.get('thingId'));
+        if (thingId) {
+          this.openThing(thingId);
+        } else {
+          this.closeThing();
         }
-      })
+      }),
     );
 
     if (!this.loadFromRoute()) {
@@ -135,6 +138,10 @@ export class ThingsListWidgetComponent  implements OnInit, OnDestroy {
     if (id) {
       this.store.dispatch(actions.openThing({id}));
     }
+  }
+
+  async closeThing() {
+    this.store.dispatch(actions.setOpenedThing({openedThing: undefined}));
   }
 
 }
