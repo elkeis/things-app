@@ -8,7 +8,7 @@
     "build": "nx run @local/client:build",
     "start": "nx run @local/server:start -- --serve=`pwd`/srv",
     "dev": "nx run-many --target=dev --all",
-    "prebuild-render": "npm install",
+    "prebuild-render": "npm install && nx run @local/database:generate",
     "build-render": "npm run build"
   },
   "repository": {
