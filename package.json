@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "nx run @local/client:build",
     "start": "nx run @local/server:start -- --serve=`pwd`/srv",
-    "dev": "nx run-many --target=dev --all"
+    "dev": "nx run-many --target=dev --all",
+    "prebuild-render": "npm install",
+    "build-render": "npm run build"
   },
   "repository": {
     "type": "git",
