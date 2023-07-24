@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BaseThing } from '@local/schemas/src';
+import { BaseThing, thingSchemaBase } from '@local/schemas/src';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription, catchError, exhaustMap, from, map, of } from 'rxjs';
@@ -19,7 +19,9 @@ export class ThingsListWidgetComponent  implements OnInit, OnDestroy {
         ofType(actions.updateList),
         exhaustMap(action =>
           from(this.trpc.client.things.getAllRoots.query()).pipe(
-            map(list => actions.fetchRootThings({list}))
+            map(list => actions.fetchRootThings({
+              list: list.map(item => thingSchemaBase.parse(item))
+            }))
           )
         )
       )

@@ -17,6 +17,8 @@ model PhysicalObject {
   containerId String?            @db.Uuid
   container   PhysicalObject?    @relation("ContainerContents", fields: [containerId], references: [id])
   contents    PhysicalObject[]   @relation("ContainerContents")
+  createdAt   DateTime?          @default(now())
+  updatedAt   DateTime?          @updatedAt
 }
 
 enum PhysicalObjectType {

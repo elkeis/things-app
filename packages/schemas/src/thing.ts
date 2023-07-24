@@ -8,6 +8,8 @@ export const thingSchemaBase = z.object({
   volume: z.number().min(1, 'must be >= 1').max(100, 'must be <= 100'),
   containerId: z.string().uuid().optional().nullable(),
   type: z.enum(['THING', 'CONTAINER'], {required_error: 'must have a value'}),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
 });
 
 export type BaseThing = z.infer<typeof thingSchemaBase>
