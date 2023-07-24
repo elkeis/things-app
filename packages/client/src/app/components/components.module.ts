@@ -4,11 +4,13 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { IonicModule } from '@ionic/angular';
 import { ThingFormComponent } from './thing-form/thing-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ThingCardComponent } from './thing-card/thing-card.component';
 
 
 const components = [
   UserProfileComponent,
   ThingFormComponent,
+  ThingCardComponent,
 ]
 
 @NgModule({

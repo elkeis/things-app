@@ -28,6 +28,7 @@
     "@capacitor/status-bar": "5.0.5",
     "@ionic/angular": "^7.0.0",
     "@local/server": "^1.0.0",
+    "@ngrx/effects": "^16.1.0",
     "@ngrx/store": "^16.1.0",
     "@trpc/client": "^10.34.0",
     "ionicons": "^7.0.0",

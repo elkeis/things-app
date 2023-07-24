@@ -14,6 +14,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { ComponentsModule } from './components/components.module';
 import { thingsReducer } from './store/things';
 import { ThingsPageModule } from './pages/things/things.module';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { ThingsPageModule } from './pages/things/things.module';
       traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
     }),
     ComponentsModule,
+    EffectsModule.forRoot([]),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

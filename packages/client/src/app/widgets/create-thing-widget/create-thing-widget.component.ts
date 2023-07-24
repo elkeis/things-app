@@ -32,9 +32,9 @@ export class CreateThingWidgetComponent {
   }
 
   async createThing(thing: BaseThing) {
-    console.log(thing);
     const newThing = await this.trpc.client.things.createItem.query(thing);
     console.log(`new thing created: ${JSON.stringify(newThing, null, '\t')}`);
+    this.store.dispatch(actions.updateList());
     this.dismissCreateForm();
   }
 
