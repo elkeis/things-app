@@ -7,6 +7,7 @@ export const login = service(ctx =>
     try {
       const githubAccessToken = await ctx.github.getAccessToken({code: githubCode, redirect_uri: redirect_url});
       const user = await ctx.github.getUser(githubAccessToken.access_token);
+      await ctx.database.registerLogin(user);
       return await ctx.jwt.encrypt(user);
     } catch (error) {
       ctx.log(undefined, `error during login: ${error}`, 'error');

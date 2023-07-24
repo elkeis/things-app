@@ -21,6 +21,12 @@ model PhysicalObject {
   updatedAt   DateTime?          @updatedAt
 }
 
+model Login {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  githubUser String // a little bit of spying 
+  createdAt  DateTime @default(now())
+}
+
 enum PhysicalObjectType {
   THING
   CONTAINER

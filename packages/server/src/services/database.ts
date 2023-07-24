@@ -1,6 +1,7 @@
 import {PrismaClient} from '@prisma/client'
 import { service } from './service';
 import { BaseThing, Thing } from '@local/schemas';
+import { GithubUser } from './github';
 
 const db = new PrismaClient();
 
@@ -81,6 +82,20 @@ export const deleteThing = service(ctx =>
       }
     } else {
       throw new Error(`Thing: ${id} is not exist anymore`);
+    }
+  }
+)
+
+export const registerLogin = service(ctx => 
+  async (user: GithubUser) => {
+    try {
+      await db.login.create({
+        data: {
+          githubUser: user.login
+        }
+      });
+    } catch (ex) {
+      ctx.log(ex, `can't register login with ${user.login}`, 'error');
     }
   }
 )
