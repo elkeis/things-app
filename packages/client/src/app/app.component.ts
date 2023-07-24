@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -7,9 +8,14 @@ import { Component, Inject, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
 
   constructor(
+    private router: Router
   ) {}
 
 
   async ngOnInit() {
+  }
+
+  navigate() {
+    this.router.navigate(['/']);
   }
 }

@@ -3,7 +3,12 @@
   <ion-header [translucent]="true">
     <ion-toolbar>
       <app-user-profile-widget slot="end"/>
-      <ion-title slot="start" size="large">things</ion-title>
+      <ion-title slot="start" size="large">
+        <ion-button fill="clear" (click)="navigate()" color="success">
+          things
+          <ion-icon name="football-outline" slot="start"></ion-icon>
+        </ion-button>
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
