@@ -1,4 +1,18 @@
 .thing-card {
   display: flex;
   flex-direction: row;
+
+  .thing-name {
+    white-space: nowrap;
+    max-width: 32vw;
+    padding: 0 1em;
+
+
+    .name-container {
+      padding-left: 1em;
+      width: calc(100%);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }

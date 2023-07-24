@@ -20,7 +20,9 @@ import { EffectsModule } from '@ngrx/effects';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      mode: 'ios'
+    }),
     AppRoutingModule,
     StoreModule.forRoot({
       session: sessionReducer,
