@@ -15,14 +15,13 @@ import { ComponentsModule } from './components/components.module';
 import { thingsReducer } from './store/things';
 import { ThingsPageModule } from './pages/things/things.module';
 import { EffectsModule } from '@ngrx/effects';
+import { UnauthorizedPageModule } from './pages/unauthorized/unauthorized.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot({
-      mode: 'ios'
-    }),
+    IonicModule.forRoot(),
     AppRoutingModule,
     StoreModule.forRoot({
       session: sessionReducer,
@@ -39,6 +38,7 @@ import { EffectsModule } from '@ngrx/effects';
       traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
     }),
     ComponentsModule,
+    UnauthorizedPageModule,
     EffectsModule.forRoot([]),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
