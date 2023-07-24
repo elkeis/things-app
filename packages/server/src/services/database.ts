@@ -16,6 +16,11 @@ export const getAllThingsOnRootLevel = service(ctx =>
         container: {
           is: undefined,
         }
+      },
+      orderBy: {
+        createdAt: {
+          sort: 'asc'
+        }
       }
     })
   }  
