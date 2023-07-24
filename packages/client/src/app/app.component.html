@@ -1,14 +1,14 @@
 
 <ion-app>
-  <ion-router-outlet id="main-content">
-    <ion-header [translucent]="true">
-      <ion-toolbar>
-        <app-user-profile-widget slot="primary"/>
-        <ion-title>Where is the thing app</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <app-user-profile-widget slot="primary"/>
+      <ion-title>Where is the thing app</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-    <ion-content [fullscreen]="true">
-    </ion-content>
-  </ion-router-outlet>
+  <ion-content [fullscreen]="false">
+    <ion-router-outlet id="main-content">
+    </ion-router-outlet>
+  </ion-content>
 </ion-app>

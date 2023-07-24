@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
-import type { AppRouter } from '@local/server/src/routes/trpc/root'
+import type { AppRouter } from '@local/server/src/routes'
 import { SessionService } from './services/session.service';
 
 
@@ -23,5 +23,8 @@ export class TrpcService {
     ]
   });
 
-  constructor(private session: SessionService) { }
+
+
+  constructor(private session: SessionService) {
+  }
 }

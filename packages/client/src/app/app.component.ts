@@ -1,6 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { TrpcService } from './trpc.service';
-import { SessionService } from './services/session.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -9,8 +7,6 @@ import { SessionService } from './services/session.service';
 export class AppComponent implements OnInit {
 
   constructor(
-    private trpc: TrpcService,
-    private session: SessionService,
   ) {}
 
 

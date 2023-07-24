@@ -1,4 +1,4 @@
-import { accessTokenSchema } from "../../services/github";
+import { accessTokenSchema } from "../services/github";
 import { procedure, router } from "./trpc";
 import {z} from 'zod';
 

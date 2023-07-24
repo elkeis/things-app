@@ -2,7 +2,7 @@ import serveStatic from 'serve-handler';
 import {createServer} from 'http';
 import { createContext } from './context';
 import { createHTTPHandler } from '@trpc/server/adapters/standalone';
-import { root } from './routes/trpc/root';
+import { root } from './routes';
 import {hideBin} from 'yargs/helpers'
 import yargs from 'yargs';
 import {log} from './services/log';

@@ -14,7 +14,7 @@ model PhysicalObject {
   description String?
   name        String
   volume      Int
-  containerId String?
+  containerId String?            @db.Uuid
   container   PhysicalObject?    @relation("ContainerContents", fields: [containerId], references: [id])
   contents    PhysicalObject[]   @relation("ContainerContents")
 }

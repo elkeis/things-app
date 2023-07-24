@@ -13,6 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@local/database": "^1.0.0",
+    "@local/schemas": "^1.0.0",
+    "@prisma/client": "^5.0.0",
     "@trpc/server": "^10.32.0",
     "@types/got": "^9.6.12",
     "got": "^13.0.0",

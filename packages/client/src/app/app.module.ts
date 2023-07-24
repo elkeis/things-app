@@ -11,6 +11,9 @@ import { AuthorizePageModule } from './pages/authorize/authorize.module';
 import { WidgetsModule } from './widgets/widgets.module';
 import { sessionReducer } from './store/session';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import { ComponentsModule } from './components/components.module';
+import { thingsReducer } from './store/things';
+import { ThingsPageModule } from './pages/things/things.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,8 +22,10 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
     IonicModule.forRoot(),
     AppRoutingModule,
     StoreModule.forRoot({
-      session: sessionReducer
+      session: sessionReducer,
+      things: thingsReducer,
     }),
+    ThingsPageModule,
     AuthorizePageModule,
     WidgetsModule,
     StoreDevtoolsModule.instrument({
@@ -30,6 +35,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
       trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code
       traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)
     }),
+    ComponentsModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

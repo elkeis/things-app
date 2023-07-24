@@ -1,0 +1,45 @@
+    <form [formGroup]="form" class="thing-form" *ngIf="form" (ngSubmit)="handleCreate()">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">name {{getErrors(form.controls['name'])}}</ion-label>
+          <ion-input
+            formControlName="name"
+            type="text"
+            aria-label="Name"
+          />
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">emoji {{getErrors(form.controls['emoji'])}}</ion-label>
+          <ion-input
+            formControlName="emoji"
+            type="text"
+            aria-label="Emoji"
+          />
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">description {{getErrors(form.controls['description'])}}</ion-label>
+          <ion-input
+            formControlName="description"
+            type="text"
+            aria-label="Description"
+          />
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">volume {{getErrors(form.controls['volume'])}}</ion-label>
+          <ion-input
+            type="number"
+            formControlName="volume"
+            aria-label="Volume"
+          />
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">type {{getErrors(form.controls['type'])}}</ion-label>
+          <ion-select formControlName="type" aria-label="Type">
+            <ion-select-option *ngFor="let thing of thingTypes" [value]="thing">{{thing}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-button type="submit">create</ion-button>
+    </form>

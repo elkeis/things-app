@@ -23,6 +23,11 @@
       "es2018",
       "dom"
     ],
+    "paths": {
+      "@local/schemas/*": [
+        "../schemas/*"
+      ]
+    },
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {

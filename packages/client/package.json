@@ -34,6 +34,8 @@
     "jose": "^4.14.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "uuid": "^9.0.0",
+    "zod": "^3.21.4",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
@@ -53,6 +55,7 @@
     "@ngrx/store-devtools": "^16.1.0",
     "@types/jasmine": "~4.3.0",
     "@types/node": "^12.11.1",
+    "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
     "eslint": "^8.0.0",

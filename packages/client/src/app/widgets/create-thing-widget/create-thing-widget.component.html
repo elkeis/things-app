@@ -1,0 +1,11 @@
+
+<ion-button (click)="openCreateForm()">
+  add thing
+</ion-button>
+<ion-modal [isOpen]="!!(showCreateForm$ | async)" (willDismiss)="dismissCreateForm()">
+  <ng-template>
+    <app-thing-form
+      (create)="createThing($event)"
+    ></app-thing-form>
+  </ng-template>
+</ion-modal>

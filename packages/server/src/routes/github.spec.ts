@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it} from 'vitest';
 import { github } from './github';
-import { mockServices } from '../../test/mockServices';
+import { mockServices } from '../test/mockServices';
 
 
 describe('github router', () => {
