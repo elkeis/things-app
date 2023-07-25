@@ -5,12 +5,14 @@ import * as _ from 'lodash';
 export const initialState: {
   openedThing?: Thing,
   showCreateThingForm: boolean,
+  showPackContainerForm: boolean,
   updating: boolean,
   list: BaseThing[]
 } = {
   updating: false,
   list: [],
   showCreateThingForm: false,
+  showPackContainerForm: false,
 }
 
 export const actions = {
@@ -22,12 +24,16 @@ export const actions = {
   fetchRootThings: createAction('[Things] fetch all root', props<{list: typeof initialState['list']}>()),
   showCreateThingForm: createAction('[Things] show create thing form'),
   hideCreateThingForm: createAction('[Things] hide create thing form'),
+  showPackContainerForm: createAction('[Things] show pack container form'),
+  hidePackContainerForm: createAction('[Things] hide pack container form'),
+  packThings: createAction('[Things] pack things', props<{things: BaseThing[]}>()),
 }
 
 export const thingsReducer = createReducer(
   initialState,
   on(actions.setOpenedThing, (state, {type, ...props}) => ({...state, ...props})),
   on(actions.setUpdating, (state, {type, ...props}) => ({...state, ...props})),
+  on(actions.packThings, state => state),
   on(actions.updateList, state => state),
   on(actions.fetchRootThings, (state, {type, ...props}) => {
     const old = state.list.map(item => item.id);
@@ -47,5 +53,7 @@ export const thingsReducer = createReducer(
   }),
   on(actions.showCreateThingForm, (state) => ({...state, showCreateThingForm: true})),
   on(actions.hideCreateThingForm, (state) => ({...state, showCreateThingForm: false})),
+  on(actions.showPackContainerForm, (state) => ({...state, showPackContainerForm: true})),
+  on(actions.hidePackContainerForm, (state) => ({...state, showPackContainerForm: false})),
 );
 

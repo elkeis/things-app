@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TrpcService } from '../../trpc.service';
+import { TrpcService } from '../../services/trpc.service';
 import { Router } from '@angular/router';
 import { decodeJwt } from 'jose';
 import { SessionService } from 'src/app/services/session.service';

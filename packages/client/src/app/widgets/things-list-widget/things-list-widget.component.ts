@@ -1,11 +1,11 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, EventType, NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseThing, thingSchemaBase, thingSchema } from '@local/schemas/src';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, catchError, exhaustMap, from, map, of, tap } from 'rxjs';
+import { Observable, Subscription, exhaustMap, from, map, tap } from 'rxjs';
 import { actions, initialState } from 'src/app/store/things';
-import { TrpcService } from 'src/app/trpc.service';
+import { TrpcService } from 'src/app/services/trpc.service';
 import {z} from 'zod';
 
 @Component({
@@ -39,10 +39,11 @@ export class ThingsListWidgetComponent  implements OnInit, OnDestroy {
     () =>
       this.actions$.pipe(
         ofType(actions.deleteThing),
+        concatLatestFrom(action => this.store.select(state => state.things.openedThing)),
         tap(() => this.store.dispatch(actions.setUpdating({updating: true}))),
-        exhaustMap(({type, ...payload}) =>
+        exhaustMap(([{type, ...payload}, openedThing]) =>
           from(this.trpc.client.things.deleteItem.query(payload)).pipe(
-            map(() => actions.updateList())
+            map(() => openedThing ? actions.openThing({id: openedThing.id || ''}) : actions.updateList())
           )
         ),
         tap(() => this.store.dispatch(actions.setUpdating({updating: false})))

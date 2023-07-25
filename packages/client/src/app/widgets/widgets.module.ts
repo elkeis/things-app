@@ -5,12 +5,14 @@ import { CreateThingWidgetComponent } from './create-thing-widget/create-thing-w
 import { ComponentsModule } from '../components/components.module';
 import { IonicModule } from '@ionic/angular';
 import { ThingsListWidgetComponent } from './things-list-widget/things-list-widget.component';
+import { PackContainerWidgetComponent } from './pack-container-widget/pack-container-widget.component';
 
 
 const widgets = [
   UserProfileWidgetComponent,
   CreateThingWidgetComponent,
   ThingsListWidgetComponent,
+  PackContainerWidgetComponent,
 ]
 
 @NgModule({

@@ -2,7 +2,10 @@
 <div class="things-page">
   <app-things-list-widget/>
   <div class="controls">
-    <app-create-thing-widget></app-create-thing-widget>
+    <app-pack-container-widget *ngIf="!!(openedThing$ | async); else RootContainerWidget"></app-pack-container-widget>
+    <ng-template #RootContainerWidget>
+      <app-create-thing-widget></app-create-thing-widget>
+    </ng-template>
   </div>
 </div>
 

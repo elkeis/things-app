@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { CreateThingWidgetComponent } from './create-thing-widget.component';
+import { PackContainerWidgetComponent } from './pack-container-widget.component';
 
-describe('CreateThingWidgetComponent', () => {
-  let component: CreateThingWidgetComponent;
-  let fixture: ComponentFixture<CreateThingWidgetComponent>;
+describe('PackContainerWidgetComponent', () => {
+  let component: PackContainerWidgetComponent;
+  let fixture: ComponentFixture<PackContainerWidgetComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateThingWidgetComponent ],
+      declarations: [ PackContainerWidgetComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CreateThingWidgetComponent);
+    fixture = TestBed.createComponent(PackContainerWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

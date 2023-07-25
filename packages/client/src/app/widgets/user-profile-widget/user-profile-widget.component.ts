@@ -1,10 +1,8 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { SessionService } from 'src/app/services/session.service';
-import { actions, initialState } from 'src/app/store/session';
-import { TrpcService } from 'src/app/trpc.service';
+import { initialState } from 'src/app/store/session';
+import { TrpcService } from 'src/app/services//trpc.service';
 
 @Component({
   selector: 'app-user-profile-widget',

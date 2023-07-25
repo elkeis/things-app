@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from '@local/server/src/routes'
-import { SessionService } from './services/session.service';
+import { SessionService } from './session.service';
 
 
 @Injectable({

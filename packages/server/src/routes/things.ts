@@ -25,7 +25,7 @@ import {thingSchema, thingSchemaBase} from '@local/schemas';
 export const things = router({
   getAllRoots: protectedProcedure
     .input(z.undefined())
-    .output(z.array(thingSchema))
+    .output(z.array(thingSchemaBase))
     .query(async ({ctx}) => {
       return await ctx.database.getAllThingsOnRootLevel();
     }),
@@ -51,6 +51,15 @@ export const things = router({
     .output(thingSchema.or(z.null()))
     .query(async ({ctx, input}) => {
       return await ctx.database.findThingsById(input)
-    })
+    }),
+  packContainer: protectedProcedure
+    .input(z.object({
+      containerId: z.string().uuid(),
+      things: z.array(z.string().uuid()),
+    }))
+    .output(thingSchema)
+    .query(async ({ctx, input}) => {
+      return await ctx.database.packContainer(input.containerId, input.things);
+    }),
 });
 

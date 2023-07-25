@@ -1,0 +1,15 @@
+<ion-button (click)="openPackContainerForm()">
+  pack
+</ion-button>
+<ion-modal [isOpen]="!!(showPackContainerForm$ | async)" (willDismiss)="closePackContainerForm()">
+  <ng-template>
+    <app-packing-list-form
+      [things]="packableThings$ | async"
+      [autoSelect]="(container$ | async)?.contents"
+      [volume]="(container$ | async)?.volume || 0"
+      (cancel)="closePackContainerForm()"
+      (pack)="handlePack($event)"
+    ></app-packing-list-form>
+  </ng-template>
+</ion-modal>
+

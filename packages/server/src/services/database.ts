@@ -2,6 +2,7 @@ import {PrismaClient} from '@prisma/client'
 import { service } from './service';
 import { BaseThing, Thing } from '@local/schemas';
 import { GithubUser } from './github';
+import { TRPCError } from '@trpc/server';
 
 const db = new PrismaClient();
 
@@ -15,12 +16,12 @@ export const getAllThingsOnRootLevel = service(ctx =>
       },
       where: {
         container: {
-          is: undefined,
+          is: null,
         }
       },
       orderBy: {
         createdAt: {
-          sort: 'asc'
+          sort: 'asc',
         }
       }
     })
@@ -64,7 +65,7 @@ export const deleteThing = service(ctx =>
             }
           },
           data: {
-            containerId: null
+            containerId: physicalObject.containerId,
           }
         }));
       }
@@ -103,7 +104,7 @@ export const registerLogin = service(ctx =>
 export const findThingsById = service(ctx => 
   async (id: string) => {
     try {
-      return await db.physicalObject.findUnique({
+      const result = await db.physicalObject.findUnique({
         where: {
           id
         },
@@ -111,9 +112,64 @@ export const findThingsById = service(ctx =>
           contents: true,
         }
       });
+      ctx.log(result)
+      return result;
     } catch (ex) {
       ctx.log(ex, `can't fetch Thing:${id}`, 'error');
       return null;
     }
   }
+)
+
+export const packContainer = service(ctx => 
+  async (containerId: string, items: string[]) => {
+    try {
+
+      const container = await db.physicalObject.findUnique({
+        where: {
+          id: containerId
+        },
+        include: {
+          contents: true,
+        }
+      });
+  
+      const thingsToRemove = container?.contents.filter(thing => !items.includes(thing.id)).map(thing => thing.id);
+  
+      const operations = [];
+      operations.push(db.physicalObject.updateMany({
+        where: {
+          id : {
+            in: items
+          }
+        },
+        data: {
+          containerId,
+        }
+      }));
+      if (thingsToRemove && thingsToRemove.length) {
+        operations.push(db.physicalObject.updateMany({
+          where: {
+            id: {
+              in: thingsToRemove,
+            }
+          }, 
+          data: {
+            containerId: container?.containerId
+          },
+        }))
+      }
+  
+      await db.$transaction(operations);
+
+      return await findThingsById(containerId);
+    }  catch (ex) {
+      ctx.log(ex, `error ocurred with packing Container:${containerId}`, 'error');
+      throw new TRPCError({
+        message: `Unable to pack container ${containerId}, please reload page, or try again later`,
+        code: 'INTERNAL_SERVER_ERROR',
+        cause: ex
+      })
+    }
+  }  
 )

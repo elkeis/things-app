@@ -1,9 +1,9 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { BaseThing } from '@local/schemas/src';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { actions, initialState } from 'src/app/store/things';
-import { TrpcService } from 'src/app/trpc.service';
+import { TrpcService } from 'src/app/services/trpc.service';
 
 @Component({
   selector: 'app-create-thing-widget',

@@ -5,12 +5,14 @@ import { IonicModule } from '@ionic/angular';
 import { ThingFormComponent } from './thing-form/thing-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ThingCardComponent } from './thing-card/thing-card.component';
+import { PackingListFormComponent } from './packing-list-form/packing-list-form.component';
 
 
 const components = [
   UserProfileComponent,
   ThingFormComponent,
   ThingCardComponent,
+  PackingListFormComponent,
 ]
 
 @NgModule({

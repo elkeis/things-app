@@ -1,0 +1,48 @@
+
+
+
+<ion-header>
+  <ion-toolbar>
+    <div class="ion-padding">
+      <ion-chip [outline]="true">
+        {{calculateOccupiedVolume()}}
+        /
+        {{volume}}
+      </ion-chip>
+      cm<sup>3</sup> occupied
+    </div>
+    <ion-progress-bar
+      [value]="calculateOccupiedVolume()/volume"
+      [buffer]="calculatePreoccupied()/volume"
+    />
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <h5>pack those things</h5>
+    </ion-list-header>
+    <ion-item *ngFor="let thing of things || []" (click)="toggle(thing)">
+      <div class="packing-item">
+        <ion-checkbox [checked]="isSelected(thing)" [ariaLabel]="thing.name">
+          <app-thing-card [thing]="thing"></app-thing-card>
+        </ion-checkbox>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer class="footer-height">
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="performCancel()">cancel</ion-button>
+    </ion-buttons>
+    <ion-button slot="primary">
+      <ion-button (click)="performPack()">pack</ion-button>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+
+
