@@ -11,7 +11,7 @@ import {v4} from 'uuid';
 export class ThingFormComponent {
 
   @Output() create = new EventEmitter<BaseThing>();
-
+  @Output() cancel = new EventEmitter<void>();
   public thingTypes = ['CONTAINER', 'THING'];
 
   public form: FormGroup;
@@ -63,6 +63,10 @@ export class ThingFormComponent {
         console.log("form is invalid");
       }
     })
+  }
+
+  handleCancel() {
+    this.cancel.emit();
   }
 
 }

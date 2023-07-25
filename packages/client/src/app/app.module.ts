@@ -21,9 +21,7 @@ import { UnauthorizedPageModule } from './pages/unauthorized/unauthorized.module
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot({
-      mode: 'ios'
-    }),
+    IonicModule.forRoot(),
     AppRoutingModule,
     StoreModule.forRoot({
       session: sessionReducer,

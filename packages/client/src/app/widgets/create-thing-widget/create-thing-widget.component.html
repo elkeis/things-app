@@ -6,6 +6,7 @@
   <ng-template>
     <app-thing-form
       (create)="createThing($event)"
+      (cancel)="dismissCreateForm()"
     ></app-thing-form>
   </ng-template>
 </ion-modal>

@@ -1,3 +1,5 @@
-.thing-form {
-  padding: 1em;
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

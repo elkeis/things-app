@@ -143,6 +143,7 @@ export class ThingsListWidgetComponent  implements OnInit, OnDestroy {
 
   async closeThing() {
     this.store.dispatch(actions.setOpenedThing({openedThing: undefined}));
+    this.store.dispatch(actions.updateList());
   }
 
 }
