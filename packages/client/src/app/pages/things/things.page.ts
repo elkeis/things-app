@@ -10,12 +10,12 @@ import { initialState } from 'src/app/store/things';
   styleUrls: ['./things.page.scss'],
 })
 export class ThingsPage implements OnInit {
-  openedThing$: Observable<Thing | undefined>;
+  isRoot$: Observable<boolean>;
 
   constructor(
     private store: Store<{things: typeof initialState}>
   ) {
-    this.openedThing$ = this.store.select(state => state.things.openedThing);
+    this.isRoot$ = this.store.select(state => state.things.container?.type === 'ROOT');
   }
 
   ngOnInit() {

@@ -12,7 +12,6 @@ export const getAllThingsOnRootLevel = service(ctx =>
     return await db.physicalObject.findMany({
       include: {
         container: true,
-        contents: true,
       },
       where: {
         container: {
@@ -102,18 +101,54 @@ export const registerLogin = service(ctx =>
 )
 
 export const findThingsById = service(ctx => 
-  async (id: string) => {
+  async (id: string | undefined) => {
     try {
-      const result = await db.physicalObject.findUnique({
-        where: {
-          id
-        },
-        include: {
-          contents: true,
+      if (!id) {
+        let root = await db.physicalObject.findFirst({
+          where: {
+            type: 'ROOT',
+          }
+        });
+        if (!root) {
+          const {id} = await db.physicalObject.create({
+            data: {
+              type: 'ROOT',
+              name: 'Free Space',
+              description: 'Root container',
+              volume: 0xCAFE,
+            }
+          })
+          root = await db.physicalObject.update({
+            where: {
+              id,
+            }, 
+            data: {
+              containerId: id
+            }
+          })
         }
-      });
-      ctx.log(result)
-      return result;
+
+        const contents = await getAllThingsOnRootLevel() || [];
+        const result = {
+          ...root,
+          contents,
+          id: undefined,
+        };
+
+        ctx.log(result)
+        return result;
+      } else {
+        const result = await db.physicalObject.findUnique({
+          where: {
+            id
+          },
+          include: {
+            contents: true,
+          }
+        });
+        ctx.log(result)
+        return result;
+      }
     } catch (ex) {
       ctx.log(ex, `can't fetch Thing:${id}`, 'error');
       return null;

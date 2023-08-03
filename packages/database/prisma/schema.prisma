@@ -28,6 +28,7 @@ model Login {
 }
 
 enum PhysicalObjectType {
+  ROOT
   THING
   CONTAINER
 }

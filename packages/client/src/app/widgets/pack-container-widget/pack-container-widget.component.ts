@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BaseThing, Thing, thingSchema } from '@local/schemas/src';
+import { BaseThing, Thing, thingSchema, thingSchemaBase } from '@local/schemas/src';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable, Subscription, exhaustMap, from, map, tap } from 'rxjs';
 import { TrpcService } from 'src/app/services/trpc.service';
 import { actions, initialState } from 'src/app/store/things';
@@ -20,13 +20,13 @@ export class PackContainerWidgetComponent  implements OnInit, OnDestroy {
     () =>
       this.actions$.pipe(
         ofType(actions.packThings),
-        concatLatestFrom(action => this.store.select(state => state.things.openedThing?.id || '')),
+        concatLatestFrom(action => this.store.select(state => state.things.container?.id || '')),
         tap(() => this.store.dispatch(actions.setUpdating({updating: true}))),
         exhaustMap(([{type, ...payload}, containerId]) =>
           from(this.trpc.client.things.packContainer.query({
             containerId, things: payload.things.map(thing => thing.id || '')
           })).pipe(
-            map((updatedContainer) => actions.setOpenedThing({openedThing: thingSchema.parse(updatedContainer)}))
+            map((updatedContainer) => actions.setContainer({container: thingSchema.parse(updatedContainer)}))
           )
         ),
         tap(() => this.store.dispatch(actions.setUpdating({updating: false})))
@@ -39,13 +39,17 @@ export class PackContainerWidgetComponent  implements OnInit, OnDestroy {
     private actions$: Actions,
   ) {
     this.showPackContainerForm$ = this.store.select(state => state.things.showPackContainerForm);
-    this.packableThings$ = this.store.select(
-      state => [
-        ...state.things.list,
-        ...(state.things.openedThing?.contents|| [])
-      ]
-    );
-    this.container$ = this.store.select(state => state.things.openedThing);
+    this.packableThings$ = this.store.pipe(
+      select(state => state.things.container?.contents || []),
+      tap(() => this.store.dispatch(actions.setUpdating({updating: true}))),
+      exhaustMap(things =>
+        from(this.trpc.client.things.getItemById.query(undefined)).pipe(
+          map(root => [...things, ...(root?.contents.map(thing => thingSchemaBase.parse(thing)) || [])])
+        )
+      ),
+      tap(() => this.store.dispatch(actions.setUpdating({updating: false}))),
+    )
+    this.container$ = this.store.select(state => state.things.container);
   }
 
   private subscriptions : Subscription[] = []
@@ -54,7 +58,6 @@ export class PackContainerWidgetComponent  implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.packThings$.subscribe(a => this.store.dispatch(a))
     )
-    this.store.dispatch(actions.updateList());
   }
 
   ngOnDestroy(): void {

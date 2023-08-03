@@ -47,7 +47,7 @@ export const things = router({
     }),
   
   getItemById: protectedProcedure
-    .input(z.string().uuid())
+    .input(z.string().uuid().or(z.undefined()))
     .output(thingSchema.or(z.null()))
     .query(async ({ctx, input}) => {
       return await ctx.database.findThingsById(input)
