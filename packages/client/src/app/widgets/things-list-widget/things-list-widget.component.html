@@ -2,10 +2,7 @@
   <ion-list *ngIf="(thingsState$ | async); let state">
     <ion-list-header>
       <div class="list-header">
-        <h5 *ngIf="isRoot$ | async; else onTheFloor">inside {{state.container?.name}}</h5>
-        <ng-template #onTheFloor>
-          <h5>on the floor</h5>
-        </ng-template>
+        <h5>inside {{state.container?.name}}</h5>
         <span>
           <ion-spinner *ngIf="state.updating" name="dots"></ion-spinner>
         </span>
