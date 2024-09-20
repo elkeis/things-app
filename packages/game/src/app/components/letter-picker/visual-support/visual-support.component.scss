@@ -1,0 +1,21 @@
+:host {
+
+  >.container {
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    > canvas {
+      display: block;
+      box-sizing: border-box;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      transform: scale3d(.5, .5, .5) translate3d(-50%, -50%, 0);
+    }
+  }
+
+}

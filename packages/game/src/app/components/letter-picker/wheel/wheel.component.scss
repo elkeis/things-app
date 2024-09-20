@@ -1,0 +1,65 @@
+:host {
+  --letter-color: var(--c-black2);
+  --letter-light-color: var(--c-white);
+  --circle-color: var(--c-black3);
+  --letter-radius: 1.5em;
+  --letter-nub-color: var(--c-white);
+  --letter-nub-shadow-color: var(--c-white2);
+  --letter-nub-selected-color: var(--c-pink);
+  --letter-nub-selected-shadow-color: var(--c-pink2);
+
+  padding: calc(var(--letter-radius) * 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+
+
+  .wheel {
+    font-size: 4em;
+
+    box-sizing: border-box;
+    height: 3.5em;
+    width: 3.5em;
+    border-radius: 100%;
+
+    user-select: none;
+    transition: opacity 1s;
+    opacity: 1;
+
+    position: relative;
+    box-shadow: inset 0 0 0 calc(var(--letter-radius)/5) var(--circle-color);
+
+    &.hide {
+      opacity: 0;
+    }
+
+    >.letter {
+      height: calc(.75 * var(--letter-radius));
+      width: calc(.75 * var(--letter-radius));
+      border-radius: 100%;
+      transform: translate3d(-50%, -50%, 0);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background-color: var(--letter-nub-color);
+      border: none;
+      box-shadow: 0px 4px 0px var(--letter-nub-shadow-color);
+      color: var(--letter-color);
+
+      font-weight: bold;
+      font-size: 1em;
+
+      cursor: pointer;
+
+      &.selected {
+        background-color: var(--letter-nub-selected-color);
+        box-shadow: 0px 4px 0px var(--letter-nub-selected-shadow-color);
+        color: var(--letter-light-color);
+      }
+    }
+  }
+}
+

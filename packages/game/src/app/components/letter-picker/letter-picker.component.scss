@@ -1,0 +1,31 @@
+:host {
+  --font-weight: bold;
+  --font-family: Arial, Helvetica, sans-serif;
+
+  > .container {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+
+    // DEV // border: 1px solid peachpuff;
+    box-sizing: border-box;
+    min-height: 200px;
+    min-width: 200px;
+    height: 100%;
+    width: 100%;
+
+    >.wheel {
+      height: 100%;
+      width: 100%;
+      >.visual-support{
+        position: fixed;
+        top: 0;
+        height: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 100000;
+        pointer-events: none;
+        opacity: .7;
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<div class="container" #container>
+
+  <div class="wheel">
+    <div class="visual-support">
+      <app-visual-support></app-visual-support>
+    </div>
+
+    <app-wheel
+      [letters]="letters"
+      [tracking-area]="trackingElement"
+      (onSelectLetter)="processLetterSelect($event)"
+      (onUnselectLetter)="processLetterDeselect($event)"
+      (onEndSelection)="processEndSelection($event)"
+      [disabled]="disabled"
+    ></app-wheel>
+  </div>
+
+  <!-- DEV <input type="text" [(ngModel)]="lettersString" style="position: absolute;"> -->
+
+
+  <!-- <canvas #letter_picker_canvas></canvas> -->
+</div>
+

@@ -1,0 +1,57 @@
+import { AfterViewInit, Component, ElementRef, EventEmitter, Host, Input, OnInit, Output, Query, ViewChild } from '@angular/core';
+import { LetterPickerFacade } from './visual-support/LetterPickerFacade';
+import { WheelComponent } from "./wheel/wheel.component";
+import { FormsModule } from '@angular/forms';
+import { VisualSupportComponent } from './visual-support/visual-support.component';
+
+@Component({
+  selector: 'app-letter-picker',
+  standalone: true,
+  imports: [WheelComponent, FormsModule, VisualSupportComponent],
+  templateUrl: './letter-picker.component.html',
+  styleUrl: './letter-picker.component.scss'
+})
+export class LetterPickerComponent {
+
+  @Input('letters') letters: string[] = [];
+  @Input('disabled') disabled: boolean = false;
+  @Output('onGuess') onGuess = new EventEmitter<string>();
+  @Output('onLetterSelect') onLetterSelect = new EventEmitter<string>();
+
+  @ViewChild(VisualSupportComponent) visualSupport!: VisualSupportComponent;
+
+  trackingElement =  window.document.body;
+
+
+  set lettersString(letters: string) {
+    this.letters = letters.split('');
+  }
+
+  get lettersString() {
+    return this.letters.join('');
+  }
+
+  processLetterSelect([element, rec, letters]: [HTMLDivElement, DOMRect, string[]]) {
+    this.visualSupport.disconnectNodes();
+    this.visualSupport.addNode(this.getCenter(rec), element);
+    this.visualSupport.connectNodes();
+    this.onLetterSelect.emit(letters.join(''));
+  }
+
+  processLetterDeselect([elements, recs, letters]: [HTMLDivElement[], DOMRect[], string[]]) {
+    this.visualSupport.disconnectNodes();
+    recs.forEach((rec, index) => {
+      this.visualSupport.removeNode(this.getCenter(rec), elements[index]);
+    })
+    this.visualSupport.connectNodes();
+    this.onLetterSelect.emit(letters.join())
+  }
+
+  processEndSelection([,, word]: [HTMLDivElement[],DOMRect[],string[]]) {
+    this.onGuess.emit(word.join(''));
+  }
+
+  private getCenter(rec: DOMRect): [number, number] {
+    return [rec.x*2 + rec.width, rec.y*2 + rec.height];
+  }
+}

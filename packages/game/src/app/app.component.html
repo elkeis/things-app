@@ -1,0 +1,13 @@
+<div class="app">
+  <app-level
+    [level]="level"
+    (onLevelComplete)="processLevelComplete()"
+  ></app-level>
+
+  @if(showCongratulations) {
+    <app-hurray-screen>
+
+    </app-hurray-screen>
+  }
+  <!-- <app-letter-picker></app-letter-picker> -->
+</div>

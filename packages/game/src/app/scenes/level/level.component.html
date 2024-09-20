@@ -1,0 +1,20 @@
+<div class="level">
+
+  <div class="title">
+    уровень {{level}}
+  </div>
+
+  <app-words-game-view
+    [words]="words"
+    [selectedWord]="currentSelection"
+  />
+
+  <app-letter-picker
+    [letters]="letters"
+    (onLetterSelect)="processSelectLetter($event)"
+    (onGuess)="processGuess($event)"
+  />
+
+  <div class="glass" #glass>
+  </div>
+</div>

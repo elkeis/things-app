@@ -1,0 +1,14 @@
+<div
+  [class]="showOnUI ? 'wheel' : 'wheel hide' "
+  #wheel
+>
+  @for (letter of letters; track $index) {
+    <div
+      id="letter-{{$index}}"
+      [class]="isSelected($index) ? 'letter selected': 'letter'"
+      #letter
+    >
+      {{letter}}
+    </div>
+  }
+</div>
