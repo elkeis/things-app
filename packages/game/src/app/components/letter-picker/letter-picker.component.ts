@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Host, Input, OnInit, Output, Query, ViewChild } from '@angular/core';
-import { LetterPickerFacade } from './visual-support/LetterPickerFacade';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { WheelComponent } from "./wheel/wheel.component";
 import { FormsModule } from '@angular/forms';
 import { VisualSupportComponent } from './visual-support/visual-support.component';
@@ -19,8 +18,7 @@ export class LetterPickerComponent {
   @Output('onLetterSelect') onLetterSelect = new EventEmitter<string>();
 
   @ViewChild(VisualSupportComponent) visualSupport!: VisualSupportComponent;
-
-  trackingElement =  window.document.body;
+  trackingElement = document.body;
 
 
   set lettersString(letters: string) {

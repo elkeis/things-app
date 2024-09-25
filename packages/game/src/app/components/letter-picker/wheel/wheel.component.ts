@@ -14,7 +14,6 @@ export class WheelComponent implements AfterViewInit, OnChanges {
     'touchend',
     'mousedown',
     'mouseenter',
-    'mouseup',
   ] as Array<keyof HTMLElementEventMap>;
 
   /**
@@ -132,15 +131,17 @@ export class WheelComponent implements AfterViewInit, OnChanges {
   }
 
   private endSelection() {
-    const uiLettersArray  = this.uiLetters.toArray();
-    const indexes = this.selected.map((el, index) => this.toUiIndex(index, uiLettersArray));
-    this.onEndSelection.emit([
-      this.selected.map(el => el!.nativeElement),
-      indexes.map(index => this.letterRectangles[index]),
-      indexes.map(index => this.letters[index]),
-    ])
+    if (this.selected.length) {
+      const uiLettersArray  = this.uiLetters.toArray();
+      const indexes = this.selected.map((el, index) => this.toUiIndex(index, uiLettersArray));
+      this.onEndSelection.emit([
+        this.selected.map(el => el!.nativeElement),
+        indexes.map(index => this.letterRectangles[index]),
+        indexes.map(index => this.letters[index]),
+      ])
 
-    this.unselect(0);
+      this.unselect(0);
+    }
   }
 
   /**
@@ -254,10 +255,10 @@ export class WheelComponent implements AfterViewInit, OnChanges {
       })
     });
 
-    const tranckingElement = this.trackingArea || this.uiWheel.nativeElement;
-    tranckingElement.addEventListener('mouseup', handler)
+    const trackingElement = this.trackingArea || this.uiWheel.nativeElement;
+    trackingElement.addEventListener('mouseup', handler)
     this.offFns.push(() => {
-      tranckingElement.removeEventListener('mouseup', handler);
+      trackingElement.removeEventListener('mouseup', handler);
     });
   }
 

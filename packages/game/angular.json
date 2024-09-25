@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/game",
+            "outputPath": "../../srv_game",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -67,7 +67,8 @@
               "buildTarget": "game:build:production"
             },
             "development": {
-              "buildTarget": "game:build:development"
+              "buildTarget": "game:build:development",
+              "proxyConfig": "./proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
