@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { WheelComponent } from "./wheel/wheel.component";
 import { FormsModule } from '@angular/forms';
 import { VisualSupportComponent } from './visual-support/visual-support.component';

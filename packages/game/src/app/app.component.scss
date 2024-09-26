@@ -12,6 +12,9 @@
     font-family: var(--font-family);
     font-weight: var(--font-weight);
     background-color: var(--default-background);
+    overflow: hidden;
+
+    user-select: none;
   }
 }
 

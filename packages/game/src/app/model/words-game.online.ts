@@ -21,6 +21,7 @@ export class WordsGameOnline extends AbstractWordsGame {
     this.words = level.words.map(word => word.replaceAll(WordsGameOnline.ASTERISK_REGEX, ' '));
     this.levenNo = index;
     this.solvedWordsMap.clear();
+    this.solved.splice(0);
   }
 
   public override getWords(): string[] {

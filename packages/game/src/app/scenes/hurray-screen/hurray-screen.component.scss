@@ -1,16 +1,54 @@
 :host {
   --background-color: var(--c-black);
+  --light-text: var(--c-white);
 
 
   .hurray-screen {
+    position: absolute;
+    top: 0;
+    padding: 20vh 0;
+    box-sizing: border-box;
+
     height: 100%;
     width: 100%;
 
-    background-color: vat(--background-color);
+    background-color: var(--background-color);
+    color: var(--light-text);
+    box-shadow: 0 0 4px black;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+
+    touch-action: none;
+    -webkit-touch-callout: none;
+
+    transform: translate3d(0, -110%, 0);
+
+
+    >.contents {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      >.title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4em;
+
+        >.main {
+          font-size: 3.5em;
+        }
+        >.secondary {
+          font-size: 2.5em;
+        }
+
+      }
+    }
+
   }
 }

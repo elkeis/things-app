@@ -4,6 +4,7 @@ import { LetterPickerComponent } from './letter-picker/letter-picker.component';
 import { WheelComponent } from './letter-picker/wheel/wheel.component';
 import {FormsModule} from '@angular/forms';
 import { WordsGameViewComponent } from './words-game-view/words-game-view.component';
+import { ButtonComponent } from './essentials/button/button.component';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { WordsGameViewComponent } from './words-game-view/words-game-view.compon
     LetterPickerComponent,
     FormsModule,
     WordsGameViewComponent,
+    ButtonComponent,
   ],
   exports: [LetterPickerComponent, WordsGameViewComponent]
 })

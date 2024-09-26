@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Host, ViewChild } from '@angular/core';
-import { LetterPickerFacade } from './LetterPickerFacade';
+import { AfterViewInit, Component, ElementRef, Host, OnDestroy, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-visual-support',
@@ -8,7 +7,7 @@ import { LetterPickerFacade } from './LetterPickerFacade';
   templateUrl: './visual-support.component.html',
   styleUrl: './visual-support.component.scss'
 })
-export class VisualSupportComponent implements AfterViewInit {
+export class VisualSupportComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('container') container!: ElementRef<HTMLElement>;
 
@@ -19,11 +18,19 @@ export class VisualSupportComponent implements AfterViewInit {
 
   animation?: Promise<void>;
 
-  ngAfterViewInit(): void {
-    const {width, height} = this.container.nativeElement.getBoundingClientRect();
-    Object.assign(this.canvas.nativeElement, {width: width * 2, height: height *2, top: 0, left: 0});
+  offFns: CallableFunction[] = [];
 
+  ngAfterViewInit(): void {
+    this.adjustSize();
     this.context = this.canvas!.nativeElement.getContext('2d')!;
+
+    const adjust = this.adjustSize.bind(this);
+    window.addEventListener('resize', adjust)
+    this.offFns.push(() => window.removeEventListener('resize', adjust));
+  }
+
+  ngOnDestroy(): void {
+    this.offFns.splice(0).forEach(fn => fn());
   }
 
   addNode([x, y]: [number, number], id?: Object) {
@@ -49,6 +56,13 @@ export class VisualSupportComponent implements AfterViewInit {
 
   disconnectNodes(): void {
     this.clear();
+  }
+
+  private adjustSize() {
+    requestAnimationFrame(() => {
+      const {width, height} = this.container.nativeElement.getBoundingClientRect();
+      Object.assign(this.canvas.nativeElement, {width: width * 2, height: height *2, top: 0, left: 0});
+    })
   }
 
   private async continueLine(x: number, y: number) {

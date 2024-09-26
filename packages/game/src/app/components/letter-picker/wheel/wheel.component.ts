@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-wheel',
@@ -7,7 +7,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, O
   templateUrl: './wheel.component.html',
   styleUrl: './wheel.component.scss'
 })
-export class WheelComponent implements AfterViewInit, OnChanges {
+export class WheelComponent implements AfterViewInit, OnChanges, OnDestroy {
   static readonly EVENTS = [
     'touchstart',
     'touchmove',
@@ -53,19 +53,23 @@ export class WheelComponent implements AfterViewInit, OnChanges {
     this.offFns = [];
     requestAnimationFrame(() => {
       const letters = this.uiLetters.map(l => l.nativeElement);
-      this.letterRectangles = this.setPositions(letters);
+      this.updateLetterRectangles(letters);
       this.bindEvents(letters);
     });
   }
 
   ngAfterViewInit(): void {
     const letters = this.uiLetters.map(l => l.nativeElement);
-    this.letterRectangles = this.setPositions(letters);
+    this.updateLetterRectangles(letters);
     this.bindEvents(letters);
 
     requestAnimationFrame(() => {
       this.showOnUI = true;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.offFns?.splice(0).forEach(fn => fn());
   }
 
   public isSelected(index: number) {
@@ -214,6 +218,10 @@ export class WheelComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  private updateLetterRectangles(letters: Array<HTMLDivElement>) {
+    this.letterRectangles = this.setPositions(letters);
+  }
+
   private setPositions(letters: Array<HTMLDivElement>): DOMRect[] {
     const {
       height,
@@ -260,6 +268,14 @@ export class WheelComponent implements AfterViewInit, OnChanges {
     this.offFns.push(() => {
       trackingElement.removeEventListener('mouseup', handler);
     });
+
+    const setPositionsHandler = () => {
+      this.updateLetterRectangles(this.uiLetters.map(letter => letter.nativeElement));
+    }
+    window.addEventListener('resize', setPositionsHandler)
+    this.offFns.push(() => {
+      window.removeEventListener('resize', setPositionsHandler);
+    })
   }
 
   private getHoveredLetterIndex(event: TouchEvent): number {

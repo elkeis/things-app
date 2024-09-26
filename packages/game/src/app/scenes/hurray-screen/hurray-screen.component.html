@@ -1,8 +1,20 @@
-<div class="hurray-screen">
-  <div class="title">
-    title
-  </div>
-  <div class="submit-control">
-    submit
+<div class="hurray-screen" #screen>
+  <div class="contents">
+    <div class="title">
+      <div class="main">
+        Изумительно !
+      </div>
+
+      <div class="secondary">
+        Уровень {{levelNumber}} пройден
+      </div>
+    </div>
+    <div class="submit-control">
+      <app-button
+        text="Уровень {{nextLevelNumber}}"
+        [size]="'large'"
+        (onPress)="processSubmit()"
+      />
+    </div>
   </div>
 </div>

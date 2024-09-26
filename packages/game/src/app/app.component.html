@@ -1,13 +1,17 @@
 <div class="app">
+
   <app-level
     [level]="level"
     (onLevelComplete)="processLevelComplete()"
   ></app-level>
-
-  @if(showCongratulations) {
-    <app-hurray-screen>
-
-    </app-hurray-screen>
+  @if (showCongratulations) {
+    <app-hurray-screen
+      [levelNumber]="level"
+      [nextLevelNumber]="level + 1"
+      (onSubmit)="processHurrayScreenSubmit()"
+    />
   }
+
+  <button (click)="processLevelComplete()" style="position: fixed; bottom: 0;">win</button>
   <!-- <app-letter-picker></app-letter-picker> -->
 </div>
