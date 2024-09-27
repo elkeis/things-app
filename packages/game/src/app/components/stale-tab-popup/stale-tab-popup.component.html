@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="dim"></div>
+  <div class="popup">
+    <div class="body">
+      <div class="content">
+        Похоже, игра открыта в несокльних вкладках браузера.
+        Чтобы продолжить игрыть в этой вкладке, обновите страницу.
+      </div>
+
+      <app-button
+        [text]="'Обновить'"
+        [size]="'large'"
+        (onPress)="processSubmit()"
+      ></app-button>
+    </div>
+  </div>
+</div>

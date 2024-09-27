@@ -46,7 +46,6 @@ export class ButtonComponent implements OnDestroy, AfterViewInit {
   }
 
   commitClick() {
-    console.log('click');
     this.button.nativeElement.classList.remove('click');
     const clickTime = Date.now() - this.clickStart;
     if (clickTime >= 150) {

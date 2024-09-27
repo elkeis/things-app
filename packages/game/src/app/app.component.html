@@ -3,6 +3,7 @@
   <app-level
     [level]="level"
     (onLevelComplete)="processLevelComplete()"
+    (onCurrentGameIsStale)="processGameInStaleNotification()"
   ></app-level>
   @if (showCongratulations) {
     <app-hurray-screen
@@ -12,6 +13,12 @@
     />
   }
 
-  <button (click)="processLevelComplete()" style="position: fixed; bottom: 0;">win</button>
+  @if (isViewStale) {
+    <app-stale-tab-popup
+      (onSubmit)="windowRefresh()"
+    />
+  }
+
+  <!-- <button (click)="processLevelComplete()" style="position: fixed; bottom: 0;">win</button> -->
   <!-- <app-letter-picker></app-letter-picker> -->
 </div>

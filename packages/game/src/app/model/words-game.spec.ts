@@ -5,6 +5,6 @@ describe('WordsGame', () => {
     const game = new WordsGame();
     await game.loadLevel(1);
 
-    expect(game.getLetters()).toEqual('браат'.split(''));
+    expect(await game.getLetters()).toEqual('браат'.split(''));
   })
 });

@@ -1,3 +1,5 @@
+import { Storable } from "./storable";
+
 const LEVELS = [
   {
     words: [
@@ -19,19 +21,23 @@ const LEVELS = [
 /**
  * Off line example of the words game.
  */
-export abstract class AbstractWordsGame extends EventTarget {
+export abstract class AbstractWordsGame extends Storable {
   protected words: string[] = [];
   public levenNo: number = 0;
 
   protected solved: string[] = [];
+
+  constructor(storageKey: string) {
+    super(storageKey || 'Game:Abstract');
+  }
 
   /**
    *
    * @param index - natural number
    */
   public async loadLevel(index: number) {
-    if (index <= 0 ) {
-      throw new Error(`level number can't be negative or 0, index = ${index}`);
+    if (index <= this.levenNo) {
+      throw new Error(`level number can't be negative or less or equal to current , index = ${index}`);
     }
 
     this.words = LEVELS[(index - 1)  % LEVELS.length].words;
@@ -102,9 +108,5 @@ export abstract class AbstractWordsGame extends EventTarget {
     }, {})
 
     return Object.values(alphabet).flat() as string[];
-  }
-
-  public store() {
-
   }
 }

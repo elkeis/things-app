@@ -6,6 +6,6 @@ export class WordsGame extends AbstractWordsGame {
   }
 
   public constructor() {
-    super()
+    super('Game:Offline')
   }
 }
