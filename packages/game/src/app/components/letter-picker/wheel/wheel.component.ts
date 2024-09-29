@@ -102,9 +102,6 @@ export class WheelComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-
-
-
   /**
    * Select element by index, or deselect the tail of selection
    * @param index
@@ -165,7 +162,6 @@ export class WheelComponent implements AfterViewInit, OnChanges, OnDestroy {
   private toUiIndex(index: number, uiLetters?: any[]): number {
     return (uiLetters || this.uiLetters.toArray()).indexOf(this.selected[index]);
   }
-
 
   public processEvent(event: Event) {
     if (this.disabled) {

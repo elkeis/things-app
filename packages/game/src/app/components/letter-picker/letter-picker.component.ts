@@ -42,7 +42,7 @@ export class LetterPickerComponent {
       this.visualSupport.removeNode(this.getCenter(rec), elements[index]);
     })
     this.visualSupport.connectNodes();
-    this.onLetterSelect.emit(letters.join())
+    this.onLetterSelect.emit(letters.join(''))
   }
 
   processEndSelection([,, word]: [HTMLDivElement[],DOMRect[],string[]]) {
