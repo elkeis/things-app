@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Host, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Host, Input, OnDestroy, ViewChild } from '@angular/core';
+import { isArray } from 'lodash';
 
 @Component({
   selector: 'app-visual-support',
@@ -11,12 +12,12 @@ export class VisualSupportComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
   @ViewChild('container') container!: ElementRef<HTMLElement>;
 
+  @Input('ratio') ratio: number = .5;
+
   context!: CanvasRenderingContext2D;
   // facade!: LetterPickerFacade;
 
   nodes: [number, number, Object?][] = [];
-
-  animation?: Promise<void>;
 
   offFns: CallableFunction[] = [];
 
@@ -34,10 +35,22 @@ export class VisualSupportComponent implements AfterViewInit, OnDestroy {
   }
 
   addNode([x, y]: [number, number], id?: Object) {
-    this.nodes.push([x,y,id]);
+    this.nodes.push([
+      ...this.pageToCanvas([x,y])
+      ,id
+    ]);
+  }
+
+  async registerMousemove(x: number, y:number) {
+    if(this.nodes.length) {
+      this.disconnectNodes();
+      this.connectNodes();
+      this.continueLine(...this.pageToCanvas([x, y]));
+    }
   }
 
   removeNode([x, y]: [number, number], id?: Object) {
+    [x, y] = this.pageToCanvas([x,y]);
     const index = this.nodes.findIndex(([nx, ny, nId]) => {
       if (id) {
         return nId === id
@@ -48,7 +61,7 @@ export class VisualSupportComponent implements AfterViewInit, OnDestroy {
     this.nodes.splice(index, 1);
   }
 
-  async connectNodes(): Promise<void> {
+  connectNodes(): void{
     for(const [x, y] of this.nodes) {
       this.continueLine(x, y);
     }
@@ -61,34 +74,38 @@ export class VisualSupportComponent implements AfterViewInit, OnDestroy {
   private adjustSize() {
     requestAnimationFrame(() => {
       const {width, height} = this.container.nativeElement.getBoundingClientRect();
-      Object.assign(this.canvas.nativeElement, {width: width * 2, height: height *2, top: 0, left: 0});
+      const [aWidth, aHeight] = this.pageToCanvas([width, height]);
+      Object.assign(this.canvas.nativeElement, {
+        width: aWidth,
+        height: aHeight,
+        top: 0,
+        left: 0
+      });
     })
   }
 
-  private async continueLine(x: number, y: number) {
+  private continueLine(x: number, y: number) {
     this.context.lineCap = 'round';
     this.context.lineJoin = 'round';
-    this.context.lineWidth = 1;
+    this.context.lineWidth = 16;
     this.context.strokeStyle = 'lightblue';
     this.context.lineTo(x, y);
     this.context.stroke();
-
-    this.animation = new Promise<void>(async resolve => {
-      do {
-        await new Promise(resolve => requestAnimationFrame(resolve));
-        this.context.lineWidth ++ ;
-        this.context.stroke();
-      } while (this.context.lineWidth < 16);
-      resolve();
-    });
-
-    await this.animation;
-    this.animation = undefined;
   }
 
   private async clear() {
     const {height, width} = this.canvas.nativeElement.getBoundingClientRect();
-    this.context.clearRect(0, 0, width*2, height*2);
+    this.context.clearRect(0, 0, ...this.pageToCanvas([width, height]));
     this.context.reset();
+  }
+
+  private pageToCanvas<T extends (number | [number, number])>(
+    values: T
+  ): T {
+    if (isArray(values)) {
+      return values.map(v => Math.round(v/this.ratio)) as T;
+    } else {
+      return Math.round(values as number/this.ratio) as T;
+    }
   }
 }

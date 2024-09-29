@@ -49,7 +49,11 @@ export class LetterPickerComponent {
     this.onGuess.emit(word.join(''));
   }
 
+  processMouseMove([x, y]: [number, number]) {
+    this.visualSupport.registerMousemove(x, y);
+  }
+
   private getCenter(rec: DOMRect): [number, number] {
-    return [rec.x*2 + rec.width, rec.y*2 + rec.height];
+    return [rec.x + Math.round(rec.width/2), rec.y + Math.round(rec.height/2)];
   }
 }

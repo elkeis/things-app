@@ -39,6 +39,8 @@ export class WheelComponent implements AfterViewInit, OnChanges, OnDestroy {
    * Triggered on selection reset with last selected data
    */
   @Output() onEndSelection = new EventEmitter<[HTMLDivElement[], DOMRect[], string[]]>();
+
+  @Output() onMouseMove = new EventEmitter<[number, number]>();
   @ViewChildren('letter') uiLetters!: QueryList<ElementRef<HTMLDivElement>>;
   @ViewChild('wheel') uiWheel!: ElementRef<HTMLDivElement>;
 
@@ -196,6 +198,8 @@ export class WheelComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     if ('touchmove' === event.type) {
       if (this.selected.length) {
+        const [touch] = (event as TouchEvent).touches;
+        this.onMouseMove.emit([touch.pageX, touch.pageY]);
         const hoveredIndex = this.getHoveredLetterIndex(event as TouchEvent);
         if (hoveredIndex === -1) return;
         this.smartToggle(hoveredIndex);
@@ -211,6 +215,13 @@ export class WheelComponent implements AfterViewInit, OnChanges, OnDestroy {
     if ('touchend' === event.type) {
       this.endSelection()
       return;
+    }
+
+    if ('mousemove' === event.type) {
+      if (this.selected.length) {
+        const mouse = event as MouseEvent;
+        this.onMouseMove.emit([mouse.x, mouse.y]);
+      }
     }
   }
 
@@ -260,9 +271,11 @@ export class WheelComponent implements AfterViewInit, OnChanges, OnDestroy {
     });
 
     const trackingElement = this.trackingArea || this.uiWheel.nativeElement;
-    trackingElement.addEventListener('mouseup', handler)
+    trackingElement.addEventListener('mouseup', handler);
+    trackingElement.addEventListener('mousemove', handler);
     this.offFns.push(() => {
       trackingElement.removeEventListener('mouseup', handler);
+      trackingElement.removeEventListener('mousemove', handler);
     });
 
     const setPositionsHandler = () => {
