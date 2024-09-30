@@ -1,0 +1,23 @@
+
+<div class="game-view" #root>
+  <div class="words">
+    @for (word of words; track $index) {
+      <div [class]="word.trim() ? 'word filled' : 'word'" #word>
+        @for(letter of word | split; track $index) {
+          <div class="letter-tile">{{letter}}</div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="current-selection-container">
+    <div class="current-selection" #current_selection>
+      <div class="word small">
+        @for (letter of selectedWord | split; track $index) {
+          <div class="letter-tile">{{letter}}</div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+

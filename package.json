@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "nx run @local/client:build",
-    "start": "nx run @local/server:start -- --serve=`pwd`/srv",
+    "build": "nx run @local/game:build",
+    "start": "nx run @local/server:start -- --serve=`pwd`/srv_game/browser",
+    "start:game": "nx run @local/game:start",
     "dev": "nx run-many --target=dev --all",
     "prebuild-render": "npm install && nx run @local/database:generate",
     "build-render": "npm run build"

@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+:root{
+  --c-black: #2B344B; // from bg
+  --c-black2: #4D4D4D; // from text
+  --c-black3: #3E4A68; // from letter-wheel
+  --c-white: #fff; // from letter-wheel
+  --c-white2: #A6A8AB; // from letter-wheel
+  --c-green: #65BD65; // from button
+  --c-green2: #508853; // from button
+  --c-pink: #E96FA4; // from letter-wheel
+  --c-pink2: #AF638C; // from letter-wheel
+  --c-orange: #EC6B3A; // from popup
+}
+
+
+html, body {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+
+  font-size: 1.5vh;
+
+  .example {
+    position: absolute;
+    z-index: 9000;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background-image: url(winning-screen.png);
+    background-size:cover;
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,35 @@
+:host {
+  >.level {
+    overflow-y: scroll;
+    min-height: 100% ;
+    width: 100%;
+
+    color: var(--light-letter);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1em;
+
+    >.title {
+      font-size: 1.5rem;
+      font-weight: bold;
+
+      padding: 1em;
+    }
+
+    >.glass {
+      visibility: hidden;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 9000;
+
+      &.cover {
+        visibility: visible;;
+      }
+    }
+  }
+
+}

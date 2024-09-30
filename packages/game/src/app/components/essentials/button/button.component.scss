@@ -1,0 +1,37 @@
+:host {
+  --c-text: var(--c-white);
+  --c-background: var(--c-green);
+  --c-shadow: var(--c-green2);
+
+  >button {
+    user-select: none;
+    padding: .5em 2em;
+    border-radius: 5em;
+    border: none;
+
+    color: var(--c-text);
+    background-color: var(--c-background);
+    box-shadow: 0 .3em 0 var(--c-shadow);
+    font-weight: bold;
+
+    transition: box-shadow 300ms, transform 300ms;
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+
+    &.small {
+      font-size: .7em;
+    }
+
+    &.large {
+      font-size: 2.5em;
+    }
+
+    &.click {
+
+      &:hover {
+        transform: translate3d(0, .3em, 0);
+        box-shadow: 0 0 0 var(--c-shadow);
+
+      }
+    }
+  }
+}

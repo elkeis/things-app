@@ -1,2 +1,4 @@
 node_modules/
 srv/
+srv_game/
+.env

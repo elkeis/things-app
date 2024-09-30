@@ -1,0 +1,83 @@
+:host {
+  --text-light: var(--c-white);
+
+  >.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    >.dim {
+      position: absolute;
+      top:0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.432);
+    }
+
+    >.popup {
+      // height: 300px;
+      width: 80%;
+      z-index: 1000;
+      position: relative;
+      box-sizing: border-box;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        height: 30vw;
+        width: 66vw;
+        max-width: 350px;
+        max-height: 200px;
+        padding: .4em 0;
+        color: var(--text-light);
+        font-size: 35px;
+        line-height: .8em;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        content: 'Две вкладки с игрой?';
+        background-image: url(./popup_ribbon.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 1000;
+      }
+
+      >.body {
+        box-sizing: border-box;
+        margin: 18px 0 0 0 ;
+        padding: 100px 2em 2em 2em;
+        width: 100%;
+        background-color: white;
+        height: 100%;
+        border-radius: 2em;
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+        gap: 2em;
+        text-align: center;
+
+        font-size: .7em;
+        >.content {
+          font-size: 2em;
+        }
+      }
+    }
+  }
+}

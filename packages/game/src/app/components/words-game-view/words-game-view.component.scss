@@ -1,0 +1,87 @@
+:host {
+  --dark-letter: var(--c-black2);
+  --light-letter: var(--c-white);
+  --font-weight: bold;
+  --font-family: Arial, Helvetica, sans-serif;
+  --letter-tile-size: 2.5em;
+  --letter-tile-small-size: 1.5em;
+  --winner-word-color: var(--c-green);
+  --celebration-word-color: var(--c-orange);
+  --tile-color: var(--c-white);
+
+  @keyframes blink {
+    0% {background-color: var(--celebration-word-color);}
+    49%{background-color: var(--celebration-word-color);}
+    50% {background-color: var(--winner-word-color);}
+    99% {background-color: var(--winner-word-color);}
+  }
+
+  >.game-view {
+    height: 100%;
+    width: 100%;
+
+    font-weight: var(--font-weight);
+    font-family: var(--font-family);
+    color: var(--dark-letter);
+    user-select: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+
+    .word {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: .7em;
+
+      &.small {
+        gap: .37em;
+
+        >.letter-tile {
+          font-size: var(--letter-tile-small-size);
+        }
+      }
+
+      &.filled {
+        >.letter-tile {
+          background-color: var(--winner-word-color);
+          color: var(--light-letter);
+        }
+      }
+
+      >.letter-tile {
+        font-size: var(--letter-tile-size);
+        height: 1.4em;
+        width: 1.4em;
+        border-radius: .4em;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: var(--tile-color);
+        transition: background-color .3s;
+      }
+    }
+
+
+    >.words {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+
+    >.current-selection-container {
+      min-height: 4em;
+      >.current-selection {
+        transition: all 2s;
+      }
+    }
+  }
+}
